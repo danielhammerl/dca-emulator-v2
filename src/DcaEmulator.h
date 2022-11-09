@@ -6,6 +6,8 @@
 #define DCAEMULATOR_DCAEMULATOR_H
 
 #include "cli/CLI.h"
+#include "types/InstructionSet.h"
+#include <list>
 
 class DcaEmulator {
 public:
@@ -21,13 +23,15 @@ public:
 
 protected:
 
-    bool readInputFile(std::string pathToExec);
+    bool readInputFile(const std::string& pathToExec);
 
 private:
     CLI *cli;
 
     int argc;
     char **argv;
+
+    std::list<InstructionSet> instructions;
 };
 
 

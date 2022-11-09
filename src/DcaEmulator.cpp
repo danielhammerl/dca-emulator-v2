@@ -24,6 +24,8 @@ bool DcaEmulator::init() {
     if (!readInputFile(cli->getPathToExecutable())) {
         return false;
     }
+
+    return true;
 }
 
 bool DcaEmulator::run() {
@@ -34,7 +36,7 @@ DcaEmulator::~DcaEmulator() {
     delete cli;
 }
 
-bool DcaEmulator::readInputFile(std::string pathToExec) {
+bool DcaEmulator::readInputFile(const std::string& pathToExec) {
     struct stat results;
 
     if (stat(pathToExec.c_str(), &results) != 0) {
@@ -45,26 +47,25 @@ bool DcaEmulator::readInputFile(std::string pathToExec) {
     auto fileSize = results.st_size;
     char buffer[fileSize];
     auto instructionCount = fileSize / INSTRUCTION_SIZE;
-    InstructionSet instructions[instructionCount];
 
     std::ifstream inputFile(pathToExec.c_str(), std::ios::in | std::ios::binary);
     inputFile.read(buffer, fileSize);
 
     for (int x = 0; x < instructionCount; x++) {
         auto offsetInBuffer = x * INSTRUCTION_SIZE;
-        instructions[x] = {
-                uint8_t(buffer[offsetInBuffer]),
-                uint16_t(buffer[offsetInBuffer + 2] | buffer[offsetInBuffer + 1] << 8),
-                uint16_t(buffer[offsetInBuffer + 4] | buffer[offsetInBuffer + 3] << 8),
-        };
+        instructions.push_back({
+                                       uint8_t(buffer[offsetInBuffer]),
+                                       uint16_t(buffer[offsetInBuffer + 2] | buffer[offsetInBuffer + 1] << 8),
+                                       uint16_t(buffer[offsetInBuffer + 4] | buffer[offsetInBuffer + 3] << 8),
+                               });
     }
 
     if (GlobalState::debugMode) {
         std::cout << "Read instructions:" << std::endl;
 
-        for (int x = 0; x < instructionCount; x++) {
-            std::cout << "Instruction " << (int) instructions[x].opcode << " with operands " << instructions[x].operand1
-                      << " and " << instructions[x].operand2
+        for (auto it: instructions) {
+            std::cout << "Instruction " << (int) it.opcode << " with operands " << it.operand1
+                      << " and " << it.operand2
                       << std::endl;
         }
     }
@@ -74,6 +75,6 @@ bool DcaEmulator::readInputFile(std::string pathToExec) {
         return false;
     }
 
-
+    return true;
 }
 
