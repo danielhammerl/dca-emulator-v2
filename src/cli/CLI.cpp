@@ -24,7 +24,7 @@ bool CLI::init(int argc, char *argv[]) {
 
     for (int additionalParamIndex = 1; additionalParamIndex < argc; additionalParamIndex++) {
         auto key = std::string(argv[additionalParamIndex]);
-        if(!commands.contains(key)) {
+        if (!commands.contains(key)) {
             std::cerr << "ERROR: invalid parameter: " << key << std::endl;
             return false;
         }

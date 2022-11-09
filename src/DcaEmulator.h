@@ -21,6 +21,8 @@ public:
 
 protected:
 
+    bool readInputFile(std::string pathToExec);
+
 private:
     CLI *cli;
 
