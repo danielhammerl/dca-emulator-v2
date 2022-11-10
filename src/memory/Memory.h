@@ -9,14 +9,14 @@
 
 class Memory {
 public:
-    explicit Memory(char* defaultData, int defaultDataLength);
-    void setByte(unsigned int index, uint8_t data);
+    explicit Memory(const char* defaultData, int defaultDataLength);
+    void setByte(uint16_t index, uint8_t data);
 
-    void setHalfWord(unsigned int index, uint16_t value);
+    void setHalfWord(uint16_t index, uint16_t value);
 
-    [[nodiscard]] const uint8_t &getByte(unsigned int index);
+    [[nodiscard]] const uint8_t &getByte(uint16_t index);
 
-    [[nodiscard]] const uint16_t getHalfWord(unsigned int index);
+    [[nodiscard]] const uint16_t getHalfWord(uint16_t index);
 
 private:
     uint8_t memoryData[65536];

@@ -6,21 +6,19 @@
 #define DCAEMULATOR_REGISTER_H
 
 #include <cstdint>
+#include <string>
 
 class Register {
 public:
-    Register() = delete;
-
-    explicit Register(uint16_t code);
-
-    [[nodiscard]] const uint16_t getCode() const;
+    explicit Register(std::string &name);
+    explicit Register(const char* name);
 
     [[nodiscard]] const uint16_t getValue() const;
     void setValue(uint16_t newValue);
 
 private:
-    uint16_t code;
     uint16_t value = 0;
+    std::string name;
 };
 
 

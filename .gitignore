@@ -16,3 +16,4 @@ _xcode
 out
 .vs
 build
+default.profraw

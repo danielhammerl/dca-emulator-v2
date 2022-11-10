@@ -7,7 +7,7 @@ include(CheckCCompilerFlag)
 set(CMAKE_APPLE_SILICON_PROCESSOR arm64)
 set(CMAKE_REQUIRED_LINK_OPTIONS "-arch;arm64")
 check_c_compiler_flag("-arch arm64" arm64Supported)
-
+set(CMAKE_CXX_STANDARD 20)
 
 IF (${CMAKE_SYSTEM_NAME} MATCHES "Darwin" AND arm64Supported MATCHES 1)
     set(CMAKE_OSX_ARCHITECTURES arm64)

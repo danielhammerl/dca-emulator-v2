@@ -48,30 +48,10 @@ bool DcaEmulator::readInputFile(const std::string &pathToExec) {
 
     auto fileSize = results.st_size;
     char buffer[fileSize];
-    auto instructionCount = fileSize / INSTRUCTION_SIZE;
 
     std::ifstream inputFile(pathToExec.c_str(), std::ios::in | std::ios::binary);
     inputFile.read(buffer, fileSize);
-/*
-    for (int x = 0; x < instructionCount; x++) {
-        auto offsetInBuffer = x * INSTRUCTION_SIZE;
-        instructions.push_back({
-                                       uint8_t(buffer[offsetInBuffer]),
-                                       uint16_t(buffer[offsetInBuffer + 2] | buffer[offsetInBuffer + 1] << 8),
-                                       uint16_t(buffer[offsetInBuffer + 4] | buffer[offsetInBuffer + 3] << 8),
-                               });
-    }
 
-    if (GlobalState::debugMode) {
-        std::cout << "Read instructions:" << std::endl;
-
-        for (auto it: instructions) {
-            std::cout << "Instruction " << (int) it.opcode << " with operands " << it.operand1
-                      << " and " << it.operand2
-                      << std::endl;
-        }
-    }
-*/
     if (!inputFile) {
         std::cerr << "ERROR: Cannot read input file" << std::endl;
         return false;

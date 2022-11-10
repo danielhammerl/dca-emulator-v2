@@ -16,13 +16,15 @@ bool CLI::init(int argc, char *argv[]) {
     }
 
     this->pathToExecutable = argv[1];
+    const int DEBUG_OFFSET = 0;
 #else
     this->pathToExecutable = "./test-executable.dbin";
+    const int DEBUG_OFFSET = 1;
 #endif
 
     auto commands = initCommands();
 
-    for (int additionalParamIndex = 1; additionalParamIndex < argc; additionalParamIndex++) {
+    for (int additionalParamIndex = 2 - DEBUG_OFFSET; additionalParamIndex < argc; additionalParamIndex++) {
         auto key = std::string(argv[additionalParamIndex]);
         if (!commands.contains(key)) {
             std::cerr << "ERROR: invalid parameter: " << key << std::endl;
@@ -36,11 +38,11 @@ bool CLI::init(int argc, char *argv[]) {
 
 std::map<std::string, std::function<void()>> CLI::initCommands() {
     auto commands = std::map<std::string, std::function<void()>>{
-            {"--debug", [] {
+            {"--debug",            [] {
                 GlobalState::debugMode = true;
             }},
             {
-                    "--performance-data", [] {
+             "--performance-data", [] {
                 GlobalState::showPerformanceData = true;
             }}
     };

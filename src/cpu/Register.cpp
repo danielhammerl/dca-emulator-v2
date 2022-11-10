@@ -4,12 +4,8 @@
 
 #include "Register.h"
 
-Register::Register(uint16_t code) : code(code) {
+Register::Register(std::string &name) : name(name) {
 
-}
-
-const uint16_t Register::getCode() const {
-    return this->code;
 }
 
 const uint16_t Register::getValue() const {
@@ -18,4 +14,8 @@ const uint16_t Register::getValue() const {
 
 void Register::setValue(uint16_t newValue) {
     this->value = newValue;
+}
+
+Register::Register(const char *name) : name(name) {
+
 }
