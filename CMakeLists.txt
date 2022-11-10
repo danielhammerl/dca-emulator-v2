@@ -21,8 +21,6 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(SFML)
-set(CMAKE_CXX_STANDARD 20)
-
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 find_package(SFML 2.6.0 COMPONENTS system window graphics network audio)
