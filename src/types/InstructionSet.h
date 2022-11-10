@@ -5,7 +5,7 @@
 #ifndef DCAEMULATOR_INSTRUCTIONSET_H
 #define DCAEMULATOR_INSTRUCTIONSET_H
 
-#include <stdint.h>
+#include <cstdint>
 
 const unsigned INSTRUCTION_SIZE = 5;
 

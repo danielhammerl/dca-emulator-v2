@@ -5,12 +5,12 @@
 #include "DcaEmulator.h"
 #include "types/InstructionSet.h"
 #include "GlobalState.h"
+#include "memory/Memory.h"
 #include <iostream>
 #include <sys/stat.h>
 #include <fstream>
 
 DcaEmulator::DcaEmulator(int argc, char *argv[]) : argc(argc), argv(argv) {
-
     cli = new CLI();
 }
 
@@ -29,14 +29,16 @@ bool DcaEmulator::init() {
 }
 
 bool DcaEmulator::run() {
-    return true;
+    return cpu->run();
 }
 
 DcaEmulator::~DcaEmulator() {
     delete cli;
+    delete memory;
+    delete cpu;
 }
 
-bool DcaEmulator::readInputFile(const std::string& pathToExec) {
+bool DcaEmulator::readInputFile(const std::string &pathToExec) {
     struct stat results;
 
     if (stat(pathToExec.c_str(), &results) != 0) {
@@ -50,7 +52,7 @@ bool DcaEmulator::readInputFile(const std::string& pathToExec) {
 
     std::ifstream inputFile(pathToExec.c_str(), std::ios::in | std::ios::binary);
     inputFile.read(buffer, fileSize);
-
+/*
     for (int x = 0; x < instructionCount; x++) {
         auto offsetInBuffer = x * INSTRUCTION_SIZE;
         instructions.push_back({
@@ -69,12 +71,15 @@ bool DcaEmulator::readInputFile(const std::string& pathToExec) {
                       << std::endl;
         }
     }
-
+*/
     if (!inputFile) {
         std::cerr << "ERROR: Cannot read input file" << std::endl;
         return false;
     }
 
+    memory = new Memory(buffer, (int) fileSize);
+
+    cpu = new CPU(memory, fileSize);
     return true;
 }
 

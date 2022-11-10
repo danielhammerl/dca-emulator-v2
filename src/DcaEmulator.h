@@ -7,6 +7,8 @@
 
 #include "cli/CLI.h"
 #include "types/InstructionSet.h"
+#include "memory/Memory.h"
+#include "cpu/CPU.h"
 #include <list>
 
 class DcaEmulator {
@@ -32,6 +34,8 @@ private:
     char **argv;
 
     std::list<InstructionSet> instructions;
+    Memory *memory;
+    CPU *cpu;
 };
 
 
