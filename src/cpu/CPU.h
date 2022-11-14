@@ -8,12 +8,14 @@
 
 #include "../memory/Memory.h"
 #include "Register.h"
+#include "../gpu/GPU.h"
 #include <map>
 #include <string>
 
 class CPU {
 public:
     CPU(Memory *memory, unsigned long instructionsCount);
+    ~CPU();
 
     bool run();
 
@@ -55,7 +57,9 @@ private:
     unsigned long long instructionCounter = 0;
 
     static std::string calculateClockRate(unsigned long long instCounter,
-                                   std::chrono::duration<double, std::milli> durationInMs) ;
+                                          std::chrono::duration<double, std::milli> durationInMs);
+
+    GPU *gpu;
 };
 
 

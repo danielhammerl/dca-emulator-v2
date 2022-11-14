@@ -36,7 +36,7 @@ ELSE()
 
 ENDIF()
 
-add_executable(DcaEmulator main.cpp src/DcaEmulator.cpp src/DcaEmulator.h src/cli/CLI.cpp src/cli/CLI.h src/GlobalState.h src/types/InstructionSet.h src/memory/Memory.h src/memory/Memory.cpp src/cpu/CPU.cpp src/cpu/CPU.h src/cpu/Register.cpp src/cpu/Register.h)
+add_executable(DcaEmulator main.cpp src/DcaEmulator.cpp src/DcaEmulator.h src/cli/CLI.cpp src/cli/CLI.h src/GlobalState.h src/types/InstructionSet.h src/memory/Memory.h src/memory/Memory.cpp src/cpu/CPU.cpp src/cpu/CPU.h src/cpu/Register.cpp src/cpu/Register.h src/gpu/GPU.cpp src/gpu/GPU.h)
 
 IF (WIN32)
     target_include_directories(DcaEmulator PUBLIC $ENV{BOOST_ROOT})

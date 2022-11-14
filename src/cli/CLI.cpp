@@ -44,6 +44,10 @@ std::map<std::string, std::function<void()>> CLI::initCommands() {
             {
              "--performance-data", [] {
                 GlobalState::showPerformanceData = true;
+            }},
+            {
+             "--no-gpu", [] {
+                GlobalState::noGpu = true;
             }}
     };
     return commands;

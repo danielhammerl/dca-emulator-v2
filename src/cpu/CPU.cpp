@@ -12,6 +12,9 @@
 CPU::CPU(Memory *memory, unsigned long instructionsCount) : memory(memory) {
     registerInstructions();
     registerMap.at(RSP).setValue(instructionsCount);
+    if (!GlobalState::noGpu) {
+        gpu = new GPU(memory);
+    }
 }
 
 
@@ -26,6 +29,9 @@ bool CPU::run() {
         };
 
         instructionDefinition.at(currentInstruction.opcode)(currentInstruction.operand1, currentInstruction.operand2);
+        if (!GlobalState::noGpu) {
+            gpu->tick();
+        }
         instructionCounter++;
 
         if (registerMap.at(RPC).getValue() == registerMap.at(RSP).getValue()) {
@@ -40,7 +46,8 @@ bool CPU::run() {
     if (GlobalState::showPerformanceData) {
         std::chrono::duration<double, std::milli> durationInMs = endTime - startTime;
         std::cout << "Ran " << instructionCounter << " instructions in " << durationInMs.count() << "ms" << std::endl;
-        std::cout << "This is equal to round about " << calculateClockRate(instructionCounter, durationInMs) << std::endl;
+        std::cout << "This is equal to round about " << calculateClockRate(instructionCounter, durationInMs)
+                  << std::endl;
     }
 
     return true;
@@ -65,7 +72,7 @@ void CPU::registerInstructions() {
         }
 
         auto value = registerMap.at(operand1).getValue();
-        uint8_t data = *(((unsigned char *) &value) + 1);
+        uint8_t data = value & 0xff; // get lower byte
         auto memoryAddress = registerMap.at(operand2).getValue();
         memory->setByte(memoryAddress, data);
         loadNextInstruction();
@@ -98,7 +105,7 @@ void CPU::registerInstructions() {
 
         uint16_t data = registerMap.at(operand1).getValue();
         auto memoryAddress = registerMap.at(operand2).getValue();
-        memory->setHalfWord(memoryAddress, data);
+        memory->setHalfWord((int) memoryAddress, (int) data);
         loadNextInstruction();
     };
 
@@ -151,7 +158,6 @@ void CPU::registerInstructions() {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction CJUMPI with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
-
         uint16_t jumpTo = registerMap.at(operand1).getValue();
         bool doJump = registerMap.at(operand2).getValue() != 0;
 
@@ -171,7 +177,7 @@ void CPU::loadNextInstruction() {
 
 std::string CPU::calculateClockRate(unsigned long long instCounter, std::chrono::duration<double, std::milli> durationInMs) {
     double duration = durationInMs.count();
-    auto instructionsPerMs = (double)instCounter / duration;
+    auto instructionsPerMs = (double) instCounter / duration;
     auto instructionsPerS = instructionsPerMs * 1000;
 
     int counter = 0;
@@ -188,4 +194,10 @@ std::string CPU::calculateClockRate(unsigned long long instCounter, std::chrono:
     stream << suffixes[counter];
 
     return stream.str();
+}
+
+CPU::~CPU() {
+    if (!GlobalState::noGpu) {
+        delete gpu;
+    }
 }

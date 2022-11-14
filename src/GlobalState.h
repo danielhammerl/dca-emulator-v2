@@ -10,6 +10,7 @@ class GlobalState {
 public:
     static inline bool debugMode = false;
     static inline bool showPerformanceData = false;
+    static inline bool noGpu = false;
 };
 
 
