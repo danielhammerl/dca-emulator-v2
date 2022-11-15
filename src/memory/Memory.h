@@ -6,10 +6,12 @@
 #define DCAEMULATOR_MEMORY_H
 
 #include <cstdint>
+#include "../constants.h"
 
 class Memory {
 public:
-    explicit Memory(const char* defaultData, int defaultDataLength);
+    explicit Memory(const char *defaultData, int defaultDataLength);
+
     void setByte(uint16_t index, uint8_t data);
 
     void setHalfWord(uint16_t index, uint16_t value);
@@ -19,7 +21,7 @@ public:
     [[nodiscard]] const uint16_t getHalfWord(uint16_t index);
 
 private:
-    uint8_t memoryData[65536];
+    uint8_t memoryData[dca::Memory::MEMORY_MAX_LENGTH];
 };
 
 

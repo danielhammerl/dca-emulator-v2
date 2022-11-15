@@ -11,7 +11,7 @@
 
 CPU::CPU(Memory *memory, unsigned long instructionsCount) : memory(memory) {
     registerInstructions();
-    registerMap.at(RSP).setValue(instructionsCount);
+    registerMap.at(dca::Register::RSP).setValue(instructionsCount);
     if (!GlobalState::noGpu) {
         gpu = new GPU(memory);
     }
@@ -21,7 +21,7 @@ CPU::CPU(Memory *memory, unsigned long instructionsCount) : memory(memory) {
 bool CPU::run() {
     auto startTime = std::chrono::high_resolution_clock::now();
     while (!finished) {
-        auto currentInstructionIndex = registerMap.at(RPC).getValue();
+        auto currentInstructionIndex = registerMap.at(dca::Register::RPC).getValue();
         InstructionSet currentInstruction = {
                 memory->getByte(currentInstructionIndex),
                 memory->getHalfWord(currentInstructionIndex + 1),
@@ -34,7 +34,7 @@ bool CPU::run() {
         }
         instructionCounter++;
 
-        if (registerMap.at(RPC).getValue() == registerMap.at(RSP).getValue()) {
+        if (registerMap.at(dca::Register::RPC).getValue() == registerMap.at(dca::Register::RSP).getValue()) {
             finished = true;
         }
     }
@@ -55,7 +55,7 @@ bool CPU::run() {
 
 void CPU::registerInstructions() {
 
-    instructionDefinition[LOAD] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::LOAD] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction LOAD with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -66,7 +66,7 @@ void CPU::registerInstructions() {
         loadNextInstruction();
     };
 
-    instructionDefinition[STORE] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::STORE] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction STORE with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -78,7 +78,7 @@ void CPU::registerInstructions() {
         loadNextInstruction();
     };
 
-    instructionDefinition[SET] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::SET] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction SET with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -87,7 +87,7 @@ void CPU::registerInstructions() {
         loadNextInstruction();
     };
 
-    instructionDefinition[LOADH] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::LOADH] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction LOADH with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -98,7 +98,7 @@ void CPU::registerInstructions() {
         loadNextInstruction();
     };
 
-    instructionDefinition[STOREH] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::STOREH] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction STOREH with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -109,7 +109,7 @@ void CPU::registerInstructions() {
         loadNextInstruction();
     };
 
-    instructionDefinition[ADD] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::ADD] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction ADD with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -119,7 +119,7 @@ void CPU::registerInstructions() {
         loadNextInstruction();
     };
 
-    instructionDefinition[SUB] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::SUB] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction SUB with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -129,7 +129,7 @@ void CPU::registerInstructions() {
         loadNextInstruction();
     };
 
-    instructionDefinition[CJUMP] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::CJUMP] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction CJUMP with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -138,13 +138,13 @@ void CPU::registerInstructions() {
         bool doJump = registerMap.at(operand2).getValue() == 0;
 
         if (doJump) {
-            registerMap.at(RPC).setValue(jumpTo);
+            registerMap.at(dca::Register::RPC).setValue(jumpTo);
         } else {
             loadNextInstruction();
         }
     };
 
-    instructionDefinition[MOV] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::MOV] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction MOV with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -154,7 +154,7 @@ void CPU::registerInstructions() {
         loadNextInstruction();
     };
 
-    instructionDefinition[CJUMPI] = [&](uint16_t operand1, uint16_t operand2) {
+    instructionDefinition[dca::Instructions::CJUMPI] = [&](uint16_t operand1, uint16_t operand2) {
         if (GlobalState::debugMode) {
             std::cout << "Run instruction CJUMPI with " << (int) operand1 << " and " << (int) operand2 << std::endl;
         }
@@ -162,7 +162,7 @@ void CPU::registerInstructions() {
         bool doJump = registerMap.at(operand2).getValue() != 0;
 
         if (doJump) {
-            registerMap.at(RPC).setValue(jumpTo);
+            registerMap.at(dca::Register::RPC).setValue(jumpTo);
         } else {
             loadNextInstruction();
         }
@@ -170,12 +170,13 @@ void CPU::registerInstructions() {
 }
 
 void CPU::loadNextInstruction() {
-    auto currentInstructionIndex = registerMap.at(RPC).getValue();
+    auto currentInstructionIndex = registerMap.at(dca::Register::RPC).getValue();
     auto nextInstructionIndex = currentInstructionIndex + INSTRUCTION_SIZE;
-    registerMap.at(RPC).setValue(nextInstructionIndex);
+    registerMap.at(dca::Register::RPC).setValue(nextInstructionIndex);
 }
 
-std::string CPU::calculateClockRate(unsigned long long instCounter, std::chrono::duration<double, std::milli> durationInMs) {
+std::string
+CPU::calculateClockRate(unsigned long long instCounter, std::chrono::duration<double, std::milli> durationInMs) {
     double duration = durationInMs.count();
     auto instructionsPerMs = (double) instCounter / duration;
     auto instructionsPerS = instructionsPerMs * 1000;

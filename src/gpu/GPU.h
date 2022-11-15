@@ -29,7 +29,6 @@ protected:
 private:
     Memory *memory;
     const int VIDEO_BUFFER_SIZE = 150;
-    const int GPU_MEMORY_ADDRESS_OFFSET = 65280;
 
     sf::RenderWindow *window;
     sf::Event *event;

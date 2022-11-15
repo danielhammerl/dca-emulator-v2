@@ -3,10 +3,12 @@
 //
 
 #include "GPU.h"
+#include "../constants.h"
 
 GPU::GPU(Memory *memory) : memory(memory) {
 
-    window = new sf::RenderWindow(sf::VideoMode(VIDEO_BUFFER_SIZE, VIDEO_BUFFER_SIZE, 32), "DCA Emulator v2", sf::Style::Titlebar);
+    window = new sf::RenderWindow(sf::VideoMode(VIDEO_BUFFER_SIZE, VIDEO_BUFFER_SIZE, 32), "DCA Emulator v2",
+                                  sf::Style::Titlebar);
     event = new sf::Event();
 
     image.create(VIDEO_BUFFER_SIZE, VIDEO_BUFFER_SIZE);
@@ -20,22 +22,22 @@ GPU::~GPU() {
 }
 
 void GPU::tick() {
-    auto gpuOpcode = memory->getByte(GPU_MEMORY_ADDRESS_OFFSET);
+    auto gpuOpcode = memory->getByte(dca::Gpu::GPU_MEMORY_ADDRESS_OFFSET);
     switch (gpuOpcode) {
-        case 0:
+        case dca::Gpu::Instructions::NOOP:
             break;
 
-        case 1:
+        case dca::Gpu::Instructions::CLEAR:
             clearBuffer();
             break;
 
-        case 2:
-            draw(memory->getHalfWord(GPU_MEMORY_ADDRESS_OFFSET + 1),
-                 memory->getHalfWord(GPU_MEMORY_ADDRESS_OFFSET + 3),
-                 memory->getHalfWord(GPU_MEMORY_ADDRESS_OFFSET + 5));
+        case dca::Gpu::Instructions::BUFFER:
+            draw(memory->getHalfWord(dca::Gpu::GPU_MEMORY_ADDRESS_OFFSET + 1),
+                 memory->getHalfWord(dca::Gpu::GPU_MEMORY_ADDRESS_OFFSET + 3),
+                 memory->getHalfWord(dca::Gpu::GPU_MEMORY_ADDRESS_OFFSET + 5));
             break;
 
-        case 3:
+        case dca::Gpu::Instructions::DRAW:
             displayBuffer();
             break;
 
