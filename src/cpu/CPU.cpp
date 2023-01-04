@@ -42,6 +42,7 @@ bool CPU::run() {
     auto endTime = std::chrono::high_resolution_clock::now();
 
     std::cout << "Program finished!" << std::endl;
+    std::cout << "Return value is " << memory->getHalfWord(dca::Memory::MEMORY_MAX_LENGTH - 2) << std::endl;
 
     if (GlobalState::debugRegisterValues || GlobalState::debugMode) {
         for(auto &it : registerMap) {
