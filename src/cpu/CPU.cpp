@@ -43,6 +43,12 @@ bool CPU::run() {
 
     std::cout << "Program finished!" << std::endl;
 
+    if (GlobalState::debugRegisterValues || GlobalState::debugMode) {
+        for(auto &it : registerMap) {
+            std::cout << "Register " << it.second.getName() << " has value " << it.second.getValue() << std::endl;
+        }
+    }
+
     if (GlobalState::showPerformanceData) {
         std::chrono::duration<double, std::milli> durationInMs = endTime - startTime;
         std::cout << "Ran " << instructionCounter << " instructions in " << durationInMs.count() << "ms" << std::endl;

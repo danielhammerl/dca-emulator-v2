@@ -8,7 +8,7 @@ Register::Register(std::string &name) : name(name) {
 
 }
 
-const uint16_t Register::getValue() const {
+uint16_t Register::getValue() const {
     return value;
 }
 
@@ -18,4 +18,8 @@ void Register::setValue(uint16_t newValue) {
 
 Register::Register(const char *name) : name(name) {
 
+}
+
+std::string Register::getName() const {
+    return this->name;
 }

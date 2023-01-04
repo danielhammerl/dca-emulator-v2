@@ -13,8 +13,9 @@ public:
     explicit Register(std::string &name);
     explicit Register(const char* name);
 
-    [[nodiscard]] const uint16_t getValue() const;
+    [[nodiscard]] uint16_t getValue() const;
     void setValue(uint16_t newValue);
+    [[nodiscard]] std::string getName() const;
 
 private:
     uint16_t value = 0;

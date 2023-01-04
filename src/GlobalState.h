@@ -11,6 +11,7 @@ public:
     static inline bool debugMode = false;
     static inline bool showPerformanceData = false;
     static inline bool noGpu = false;
+    static inline bool debugRegisterValues = false;
 };
 
 

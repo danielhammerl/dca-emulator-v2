@@ -48,6 +48,10 @@ std::map<std::string, std::function<void()>> CLI::initCommands() {
             {
              "--no-gpu", [] {
                 GlobalState::noGpu = true;
+            }},
+            {
+             "--debug-register-values", [] {
+                GlobalState::debugRegisterValues = true;
             }}
     };
     return commands;
