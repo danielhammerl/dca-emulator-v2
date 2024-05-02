@@ -6,6 +6,7 @@
 #define DCAEMULATOR_INSTRUCTIONSET_H
 
 #include <cstdint>
+#include "../base.h"
 
 const unsigned INSTRUCTION_SIZE = 5;
 

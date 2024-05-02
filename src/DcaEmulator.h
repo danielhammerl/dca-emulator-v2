@@ -10,6 +10,7 @@
 #include "memory/Memory.h"
 #include "cpu/CPU.h"
 #include <list>
+#include "base.h"
 
 class DcaEmulator {
 public:

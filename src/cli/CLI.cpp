@@ -9,7 +9,7 @@
 
 
 bool CLI::init(int argc, char *argv[]) {
-#ifdef NDEBUG
+#ifdef MODE_RELEASE
     if (argc == 1) {
         std::cerr << "ERROR: no path to executable is provided" << std::endl;
         return false;
@@ -39,7 +39,11 @@ bool CLI::init(int argc, char *argv[]) {
 std::map<std::string, std::function<void()>> CLI::initCommands() {
     auto commands = std::map<std::string, std::function<void()>>{
             {"--debug",            [] {
+#ifdef MODE_DEBUG
                 GlobalState::debugMode = true;
+#else
+                std::cout << "Debug mode not possible in release build" << std::endl;
+#endif
             }},
             {
              "--performance-data", [] {

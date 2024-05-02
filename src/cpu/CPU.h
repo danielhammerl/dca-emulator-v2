@@ -12,6 +12,7 @@
 #include <map>
 #include <string>
 #include "../constants.h"
+#include "../base.h"
 
 class CPU {
 public:
@@ -43,11 +44,11 @@ private:
             {dca::Register::RSP, Register("RSP")},
     };
 
-    void loadNextInstruction();
+    void loadNextInstruction(uint16_t currentInstructionIndex);
 
     bool finished = false;
 
-    std::map<uint8_t, std::function<void(uint16_t operand1, uint16_t operand2)>> instructionDefinition;
+    std::map<uint8_t, std::function<void(uint16_t operand1, uint16_t operand2, uint16_t instructionIndex)>> instructionDefinition;
 
     unsigned long long instructionCounter = 0;
 

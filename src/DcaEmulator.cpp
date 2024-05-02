@@ -39,10 +39,10 @@ DcaEmulator::~DcaEmulator() {
 }
 
 bool DcaEmulator::readInputFile(const std::string &pathToExec) {
-    struct stat results;
+    struct stat results{};
 
     if (stat(pathToExec.c_str(), &results) != 0) {
-        std::cerr << "ERROR: Cannot get file size of input file" << std::endl;
+        std::cerr << "ERROR: Could not find input file" << std::endl;
         return false;
     }
 

@@ -9,6 +9,7 @@
 #include "../memory/Memory.h"
 #include "SFML/Graphics.hpp"
 #include <iostream>
+#include "../base.h"
 
 class GPU {
 

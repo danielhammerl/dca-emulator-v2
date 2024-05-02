@@ -6,7 +6,7 @@
 #define DCAEMULATOR_CONSTANTS_H
 
 #include <cstdint>
-
+#include "base.h"
 
 namespace dca {
     namespace Register {

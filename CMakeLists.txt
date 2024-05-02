@@ -17,7 +17,7 @@ ENDIF ()
 FetchContent_Declare(
         SFML
         GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG c1064bae925693667c7a34cad264bd5ea3ece177
+        GIT_TAG 2.6.1
 )
 
 FetchContent_MakeAvailable(SFML)
@@ -36,7 +36,10 @@ ELSE()
 
 ENDIF()
 
-add_executable(DcaEmulator main.cpp src/DcaEmulator.cpp src/DcaEmulator.h src/cli/CLI.cpp src/cli/CLI.h src/GlobalState.h src/types/InstructionSet.h src/memory/Memory.h src/memory/Memory.cpp src/cpu/CPU.cpp src/cpu/CPU.h src/cpu/Register.cpp src/cpu/Register.h src/gpu/GPU.cpp src/gpu/GPU.h)
+add_executable(DcaEmulator main.cpp src/DcaEmulator.cpp src/DcaEmulator.h src/cli/CLI.cpp src/cli/CLI.h src/GlobalState.h src/types/InstructionSet.h src/memory/Memory.h src/memory/Memory.cpp src/cpu/CPU.cpp src/cpu/CPU.h src/cpu/Register.cpp src/cpu/Register.h src/gpu/GPU.cpp src/gpu/GPU.h
+        src/gpu/EmptyGpu.cpp
+        src/gpu/EmptyGpu.h
+)
 
 IF (WIN32)
     target_include_directories(DcaEmulator PUBLIC $ENV{BOOST_ROOT})

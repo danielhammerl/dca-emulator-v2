@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include <string>
+#include "../base.h"
 
 class Register {
 public:

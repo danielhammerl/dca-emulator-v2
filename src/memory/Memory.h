@@ -7,6 +7,7 @@
 
 #include <cstdint>
 #include "../constants.h"
+#include "../base.h"
 
 class Memory {
 public:

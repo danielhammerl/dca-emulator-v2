@@ -6,6 +6,7 @@
 #define DCAEMULATOR_CLI_H
 
 #include <string>
+#include "../base.h"
 #include <map>
 
 class CLI {
