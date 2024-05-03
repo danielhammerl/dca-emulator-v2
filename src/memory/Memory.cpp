@@ -24,10 +24,10 @@ void Memory::setHalfWord(uint16_t index, uint16_t value) {
     setByte(index + 1, low);
 }
 
-const uint8_t &Memory::getByte(uint16_t index) {
+const uint8_t &Memory::getByte(uint16_t index) const {
     return memoryData[index];
 }
 
-const uint16_t Memory::getHalfWord(uint16_t index) {
+uint16_t Memory::getHalfWord(uint16_t index) const {
     return getByte(index + 1) | getByte(index) << 8;
 }

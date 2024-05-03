@@ -18,9 +18,10 @@ public:
 
     ~GPU();
 
-    void tick();
+    virtual void tick();
 
 protected:
+    GPU() = default;
     void draw(uint16_t xPos, uint16_t yPos, uint16_t color);
 
     void clearBuffer();

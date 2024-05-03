@@ -204,7 +204,7 @@ void CPU::registerInstructions() {
 }
 
 void CPU::loadNextInstruction(uint16_t currentInstructionIndex) {
-    if(currentInstructionIndex + INSTRUCTION_SIZE == registerMap.at(dca::Register::RSP).getValue()) {
+    if (currentInstructionIndex + INSTRUCTION_SIZE == registerMap.at(dca::Register::RSP).getValue()) {
         finished = true;
     }
     registerMap.at(dca::Register::RPC).setValue(currentInstructionIndex + INSTRUCTION_SIZE);
@@ -233,7 +233,5 @@ CPU::calculateClockRate(unsigned long long instCounter, std::chrono::duration<do
 }
 
 CPU::~CPU() {
-    if (!GlobalState::noGpu) {
-        delete gpu;
-    }
+    delete gpu;
 }

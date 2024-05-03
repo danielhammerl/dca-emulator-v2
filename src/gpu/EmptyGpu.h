@@ -9,11 +9,15 @@
 
 class EmptyGpu: public GPU {
 public:
-    explicit EmptyGpu(Memory *memory);
+    explicit EmptyGpu(Memory *memory) {
 
-    ~EmptyGpu();
+    };
 
-    void tick();
+    ~EmptyGpu() = default;
+
+    [[maybe_unused]] void tick() {
+
+    };
 };
 
 

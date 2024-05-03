@@ -17,12 +17,12 @@ public:
 
     void setHalfWord(uint16_t index, uint16_t value);
 
-    [[nodiscard]] const uint8_t &getByte(uint16_t index);
+    [[nodiscard]] const uint8_t &getByte(uint16_t index) const;
 
-    [[nodiscard]] const uint16_t getHalfWord(uint16_t index);
+    [[nodiscard]] uint16_t getHalfWord(uint16_t index) const;
 
 private:
-    uint8_t memoryData[dca::Memory::MEMORY_MAX_LENGTH];
+    uint8_t memoryData[dca::Memory::MEMORY_MAX_LENGTH]{};
 };
 
 
